@@ -1,0 +1,34 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Создать карточку{% endblock %}
+
+{% block content %}
+<h1><i class="bi bi-plus-square-dotted"></i> Создать новую карточку</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field.errors }}
+            {{ field }}
+            {% if field.help_text %}
+                <div class="form-text">{{ field.help_text }}</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Сохранить</button>
+    <a href="{% url 'cards:card_list' %}" class="btn btn-secondary"><i class="bi bi-x-octagon"></i> Отмена</a>
+</form>
+
+<style>
+    input, textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Квиз{% endblock %}
+
+{% block content %}
+<h1>Проверь себя</h1>
+
+{% if error %}
+    <div class="alert alert-warning">{{ error }}</div>
+    <a href="{% url 'cards:card_create' %}" class="btn btn-primary">Создать карточку</a>
+{% else %}
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <h3>Как переводится слово:</h3>
+            <h2 class="display-4">{{ card.word }}</h2>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.word_id.as_hidden }}
+        <input type="hidden" name="word_id" value="{{ card_index }}">
+        <div class="mb-3">
+            <label class="form-label">{{ form.answer.label }}</label>
+            {{ form.answer }}
+            {{ form.answer.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Проверить</button>
+        <a href="{% url 'cards:quiz' %}" class="btn btn-secondary">Следующее слово</a>
+    </form>
+
+    {% if result %}
+        <div class="alert alert-info mt-3">
+            {{ result }}
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

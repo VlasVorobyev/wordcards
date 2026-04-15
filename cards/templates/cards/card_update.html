@@ -1,0 +1,22 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Редактировать {{ card.word }}{% endblock %}
+
+{% block content %}
+<h1><i class="bi bi-pencil"></i> Редактировать карточку</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label><br>
+            {{ field.errors }}
+            {{ field }}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Сохранить изменения</button>
+    <a href="{% url 'cards:card_detail' card.id %}" class="btn btn-secondary"><i class="bi bi-x-octagon"></i> Отмена</a>
+</form>
+{% endblock %}

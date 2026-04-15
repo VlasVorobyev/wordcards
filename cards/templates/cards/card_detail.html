@@ -1,0 +1,20 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}{{ card.word }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ card.word }}</h2>
+    </div>
+    <div class="card-body">
+        <p><strong>Перевод:</strong> {{ card.translation }}</p>
+        {% if card.example %}
+            <p><strong>Пример:</strong> {{ card.example }}</p>
+        {% endif %}
+        <p><small class="text-muted">Создано: {{ card.created_at|date:"d.m.Y H:i" }}</small></p>
+        <a href="{% url 'cards:card_update' card.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'cards:card_list' %}" class="btn btn-secondary">Назад</a>
+    </div>
+</div>
+{% endblock %}
