@@ -175,16 +175,16 @@ def quiz(request):
         return render(request, 'cards/quiz.html',
                       {'error': 'Нет карточек. Сначала добавьте карточки!'})
 
+    card_index = random.randint(0, len(cards) - 1)
+    random_card = cards[card_index]
     result = None
-    card_index = None
-    random_card = None
 
     if request.method == 'POST':
         # Обработка ответа пользователя
         form = QuizForm(request.POST)
         if form.is_valid():
             # Получаем индекс карточки из скрытого поля
-            card_index = form.cleaned_data['word_id']
+            card_index = int(form.cleaned_data['word_id'])
             random_card = cards[card_index]
 
             answer = form.cleaned_data['answer'].lower()
@@ -205,5 +205,6 @@ def quiz(request):
     return render(request, 'cards/quiz.html', {
         'form': form,
         'card': random_card,
+        'card_index': card_index,
         'result': result,
     })
